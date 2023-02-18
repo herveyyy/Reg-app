@@ -1,13 +1,16 @@
+import { data } from 'autoprefixer';
 import {
+    getDocs,
     addDoc,
-    collection
+    collection,
+    query,
+    where
 } from 'firebase/firestore';
 import { useState } from 'react';
 import { database } from '../../firebaseConfig';
 
 
 export default function RegForm(){   
-
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -16,7 +19,33 @@ export default function RegForm(){
     const [address, setAddress] = useState('');
     const databaseReference = collection(database, 'Beneficiaries');
     
+    const checkIfExist = async () => {
+        console.log("Checking if data exists...");
+    
+        const beneficiariesRef = query(databaseReference, 
+            where("firstName", "==", firstName)
+        );
+    
+        try {
+            const beneficiariesSnapshot = await getDocs(beneficiariesRef);
+    
+            if (beneficiariesSnapshot.empty) {
+                console.log("Data is empty, adding new record...");
+                addData();
+            } else {
+                alert("Record already exists!");
+                console.log("Data already exists, not adding record...");
+            }
+        } catch (error) {
+            console.error("Error checking if data exists:", error);
+        }
+    };
+    const isValidName = (name) => {
+        const regex = /^[a-zA-Z\s]*$/; // only alphabetic characters and whitespace allowed
+        return regex.test(name);
+      }
     const addData = () => {
+       
         addDoc(databaseReference, {
             firstName: firstName,
             middleName: middleName,
@@ -28,9 +57,11 @@ export default function RegForm(){
         console.log(
             firstName,middleName,lastName,number,age,address
         );
-    }
-    const addAndClear =() =>{
         
+    }
+    
+    const addAndClear = () =>{
+
         if(firstName == "" && middleName == "" && lastName == "" && number == "" && age == "" && address == ""){
             alert("Please fill up all information")
             setFirstName("");
@@ -40,10 +71,12 @@ export default function RegForm(){
             setAddress("");
             setAge("");
         }else{
-            addData();
-            alert("Successfully Added!")
-            console.log("data added")
-            
+            if (!isValidName(firstName) || !isValidName(middleName) || !isValidName(lastName)) {
+                alert("Invalid name format. Please use only alphabetic characters and spaces.");
+                return;
+              }
+            checkIfExist();
+            console.log("checking if record exists");
         }
         
         setFirstName("");
@@ -52,8 +85,9 @@ export default function RegForm(){
         setNumber("");
         setAddress("");
         setAge("");
-
+    
     }
+    
 
     return(
 <form>
