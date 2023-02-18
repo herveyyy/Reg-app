@@ -58,21 +58,13 @@ export default function RegForm(){
         console.log(
             firstName,middleName,lastName,number,age,address
         );
-        
+        alert("Successfully added!")
     }
     
     const addAndClear = () =>{
-
-        if(firstName == "" && middleName == "" && lastName == "" && number == "" && age == "" && address == ""){
-         
-           
+        if(firstName === "" && middleName === "" && lastName === "" && number === "" && age === "" && address === ""){
             alert("Please fill up all information")
-            setFirstName("");
-            setMiddleName("");
-            setLastName("");
-            setNumber("");
-            setAddress("");
-            setAge("");
+            
         }else{
             if (!isValidName(firstName) || !isValidName(middleName) || !isValidName(lastName)) {
                 alert("Invalid name format. Please use only alphabetic characters and spaces.");
@@ -107,7 +99,7 @@ export default function RegForm(){
         placeholder=" "
         autoComplete="off"
         onChange={(event) => setFirstName(event.target.value)}
-        value={firstName}
+        value={""+firstName}
         required />
         <label 
         htmlFor="floating_first_name" 
@@ -123,7 +115,7 @@ export default function RegForm(){
         placeholder=" "
         autoComplete="off" 
         onChange={(event) => setMiddleName(event.target.value)}
-        value={middleName}
+        value={""+middleName}
         required />
         <label 
         htmlFor="floating_middle_name" 
@@ -140,7 +132,7 @@ export default function RegForm(){
         placeholder=" "
         autoComplete="off"
         onChange={(event) => setLastName(event.target.value)}
-        value={lastName}
+        value={""+lastName}
         required />
         <label 
         htmlFor="floating_last_name" 
@@ -160,7 +152,7 @@ export default function RegForm(){
         placeholder=" " 
         autoComplete="off"
         onChange={(event) => setNumber(event.target.value)}
-        value={number}
+        value={""+number}
         required />
         <label htmlFor="floating_phone" 
         className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
@@ -175,7 +167,7 @@ export default function RegForm(){
         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
         placeholder=" "
         onChange={(event) => setAge(event.target.value)}
-        value={age}
+        value={""+age}
         required
         autoComplete="off" 
         />
@@ -194,7 +186,7 @@ export default function RegForm(){
       placeholder=" "
       autoComplete="off"
       onChange={(event) => setAddress(event.target.value)}
-    value={address}
+    value={""+address}
       required />
       <label 
       htmlFor="floating_address" 
