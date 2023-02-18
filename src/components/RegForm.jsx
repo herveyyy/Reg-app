@@ -8,7 +8,6 @@ import {
 } from 'firebase/firestore';
 import { useState } from 'react';
 import { database } from '../../firebaseConfig';
-import  Recaptcha  from 'react-google-recaptcha';
 
 export default function RegForm(){   
     const [firstName, setFirstName] = useState('');
@@ -18,20 +17,9 @@ export default function RegForm(){
     const [age, setAge] = useState('');
     const [address, setAddress] = useState('');
     const databaseReference = collection(database, 'Beneficiaries');
-    const [captcha, setCaptcha] = useState('');
 
-    const handleCaptchaChange = (value) => {
-        setCaptcha(value);
-    }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!captcha) {
-            alert('Please verify that you are a human!');
-            return;
-        }
-        addAndClear   
-     }
+   
     const checkIfExist = async () => {
         console.log("Checking if data exists...");
     
@@ -214,13 +202,10 @@ export default function RegForm(){
     Complete address</label>
     
   </div>
-  <Recaptcha
-                sitekey="6LfUqJEkAAAAAM-dMwTcbgL5-KGagz2ANvQc93-b"
-                onChange={handleCaptchaChange}
-            />
+
   <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"
   type="button"
-onClick={handleSubmit}
+onClick={addAndClear}
   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit
   </button>
   
